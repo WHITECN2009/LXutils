@@ -1,0 +1,18 @@
+name: LXutils
+version: '1.0'
+main: org.WHITECN.lxutils
+api-version: '1.20'
+prefix: LXutils
+load: STARTUP
+authors: [ WHITECN_凌星 ]
+description: 凌星的插件工具合集
+commands:
+  tofunction:
+    description: '主方法--把一列命令方块按顺序转成函数'
+    usage: /tofunction x1 y1 z1 x2 y2 z2 函数文件名(不包括后缀)
+  tofunctionconfirm:
+    description: '当文件存在的时候，选择要执行的操作'
+    usage: /tofunctionconfirm 文件名 [overwrite|append|cancel]
+  dmgmeter:
+    description: ' 控制伤害量计 '
+    usage: /dmgmeter [switch|color|digits]

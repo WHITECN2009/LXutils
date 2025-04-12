@@ -1,7 +1,5 @@
 package org.WHITECN.commands.CBtoFunction;
 
-import org.WHITECN.commands.tofunction;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
