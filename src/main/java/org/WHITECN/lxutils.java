@@ -2,7 +2,7 @@ package org.WHITECN;
 
 import org.WHITECN.commands.CBtoFunction.tofunction;
 import org.WHITECN.commands.CBtoFunction.tofunctionconfirm;
-import org.WHITECN.commands.dmgmeter;
+import org.WHITECN.commands.DamageMeter.dmgmeter;
 import org.WHITECN.utils.DamageMeter.damageListener;
 import org.WHITECN.utils.DamageMeter.tagUtils;
 import org.bukkit.plugin.java.JavaPlugin;

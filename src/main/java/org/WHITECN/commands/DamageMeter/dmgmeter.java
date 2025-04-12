@@ -1,4 +1,4 @@
-package org.WHITECN.commands;
+package org.WHITECN.commands.DamageMeter;
 
 import org.WHITECN.utils.DamageMeter.tagUtils;
 import org.bukkit.command.Command;
@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 public class dmgmeter implements CommandExecutor, TabCompleter {
-    String prefix = "§b§l[DamageMeter]§r ";
+    String prefix = "§b§l[DamageMeter_LX]§r ";
 
     List<String> colors = Arrays.asList("white", "red", "blue", "green", "yellow", "aqua", "gold", "gray", "dark_red", "dark_green", "dark_blue");
 

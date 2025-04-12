@@ -41,8 +41,7 @@ public class tofunction implements CommandExecutor {
             String fileName = args[6];
             boolean inLine = isAxisAlignedLine(x1, y1, z1, x2, y2, z2);
 
-            // 构造目标文件（相对于 plugins/CBtoFunction/outputFunctions 目录）
-            File file = new File("plugins/CBtoFunction/outputFunctions", fileName + ".mcfunction");
+            File file = new File("plugins/LXutils/CBtoFunction/outputFunctions", fileName + ".mcfunction");
             file.getParentFile().mkdirs();  // 自动创建目录
 
             if (file.exists()) {

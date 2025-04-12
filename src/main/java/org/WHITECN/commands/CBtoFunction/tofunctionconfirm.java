@@ -37,7 +37,7 @@ public class tofunctionconfirm implements CommandExecutor {
         }
         String mode = option.equals("overwrite") ? "overwrite" : "append";
 
-        File file = new File("plugins/CBtoFunction/outputFunctions", fileName + ".mcfunction");
+        File file = new File("plugins/LXutils/CBtoFunction/outputFunctions", fileName + ".mcfunction");
         boolean inLine = tofunction.isAxisAlignedLine(op.x1, op.y1, op.z1, op.x2, op.y2, op.z2);
         try {
             if (inLine) {
