@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/LXutils.main.iml" filepath="$PROJECT_DIR$/.idea/modules/LXutils.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.WHITECN.LXutils.main.iml" filepath="$PROJECT_DIR$/.idea/modules/org.WHITECN.LXutils.main.iml" />
     </modules>
   </component>
 </project>

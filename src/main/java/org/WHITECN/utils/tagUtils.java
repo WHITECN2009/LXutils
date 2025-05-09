@@ -1,4 +1,4 @@
-package org.WHITECN.utils.DamageMeter;
+package org.WHITECN.utils;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;

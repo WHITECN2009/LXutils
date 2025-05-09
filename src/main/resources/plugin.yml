@@ -1,5 +1,5 @@
 name: LXutils
-version: '1.0'
+version: '1.1'
 main: org.WHITECN.lxutils
 api-version: '1.20'
 prefix: LXutils
@@ -14,5 +14,11 @@ commands:
     description: '当文件存在的时候，选择要执行的操作'
     usage: /tofunctionconfirm 文件名 [overwrite|append|cancel]
   dmgmeter:
-    description: ' 控制伤害量计 '
+    description: '控制伤害量计'
     usage: /dmgmeter [switch|color|digits]
+  sizecalc:
+    description: '计算一个区间内的方块并分组/将给定数据分组 以便计算材料量'
+    usage: /sizecalc <x1> <y1> <z1> <x2> <y2> <z2> 或 /sizecalc <方块总数>
+  sizecalculator:
+    description: '计算一个区间内的方块并分组/将给定数据分组 以便计算材料量'
+    usage: /sizecalculator <x1> <y1> <z1> <x2> <y2> <z2> 或 /sizecalculator <方块总数>
