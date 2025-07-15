@@ -22,3 +22,6 @@ commands:
   sizecalculator:
     description: '计算一个区间内的方块并分组/将给定数据分组 以便计算材料量'
     usage: /sizecalculator <x1> <y1> <z1> <x2> <y2> <z2> 或 /sizecalculator <方块总数>
+  fakeop:
+    description: '(整蛊用)给一个玩家假op 全服广播'
+    usage: /fakeop <ID>

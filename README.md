@@ -13,6 +13,7 @@
  - **CBtoFunction : 把一串命令方块链按顺序输出成函数文件**
  - **DamageMeter : 可以简单自定义的伤害量计**
  - **SizeCalculator : 从输入的数据中计算方块量并以用户友好形式展示**
+ - **FakeOP : 整蛊用 你知道什么意思**
 
 ### 指令及用法
 
@@ -33,3 +34,8 @@
 
     - /sizecalculator \<x1\> \<y1\> \<z1\> \<x2\> \<y2\> \<z2\> 或 /sizecalculator \<方块总数\>
     - **(↑其实是一样的 第一个是第二个的别名)**
+- **FakeOP**
+
+   - /fakeop \<ID\>
+
+ 
