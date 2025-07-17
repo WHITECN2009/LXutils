@@ -6,6 +6,9 @@
 
 大概还会写点别的功能 **(没更新就是懒)**
 
+#调用声明
+ - https://github.com/LiQing-Code/bili-live-danmu
+
 # 使用指南
 
 ### 有哪些功能？
