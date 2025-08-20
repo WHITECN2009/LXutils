@@ -17,16 +17,22 @@ public final class lxutils extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        tagUtils.init(this);
-        logger = getLogger();
-        this.getLogger().info("插件已启用");
+        //此处注册事件
         getServer().getPluginManager().registerEvents(new damageListener(),this);
+        //此处注册命令
         Objects.requireNonNull(this.getCommand("dmgmeter")).setExecutor(new dmgmeter());
         Objects.requireNonNull(this.getCommand("tofunction")).setExecutor(new tofunction());
         Objects.requireNonNull(this.getCommand("tofunctionconfirm")).setExecutor(new tofunctionconfirm());
         Objects.requireNonNull(this.getCommand("sizecalc")).setExecutor(new sizecalc());
         Objects.requireNonNull(this.getCommand("sizecalculator")).setExecutor(new sizecalc());
         Objects.requireNonNull(this.getCommand("fakeop")).setExecutor(new fakeop());
+        //此处注册Tab补全
+        Objects.requireNonNull(this.getCommand("dmgmeter")).setTabCompleter(new dmgmeter());
+        Objects.requireNonNull(this.getCommand("sizecalc")).setTabCompleter(new sizecalc());
+        //此处注册其他主类方法
+        tagUtils.init(this);
+        logger = getLogger();
+        this.getLogger().info("插件已启用");
     }
 
     @Override

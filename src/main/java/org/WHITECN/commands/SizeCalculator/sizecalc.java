@@ -3,10 +3,15 @@ package org.WHITECN.commands.SizeCalculator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-public class sizecalc implements CommandExecutor {
+public class sizecalc implements CommandExecutor, TabCompleter {
     String prefix = "§b§l[SizeCalculator_LX] §r";
     int totalBlocks;
     double bigChest,chest;
@@ -55,5 +60,19 @@ public class sizecalc implements CommandExecutor {
                 return true;
             }
         }
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<String> list = new ArrayList<>();
+        return switch (args.length) {
+            case 1 -> Arrays.asList("请输入方块总量", "x1", "y1", "z1");
+            case 2 -> Arrays.asList("y1", "z1");
+            case 3 -> Arrays.asList("z1");
+            case 4 -> Arrays.asList("x2", "y2", "z2");
+            case 5 -> Arrays.asList("y2", "z2");
+            case 6 -> Arrays.asList("z2");
+            default -> Collections.emptyList();
+        };
     }
 }
