@@ -3,17 +3,24 @@ package org.WHITECN;
 import org.WHITECN.commands.CBtoFunction.tofunction;
 import org.WHITECN.commands.CBtoFunction.tofunctionconfirm;
 import org.WHITECN.commands.DamageMeter.dmgmeter;
+import org.WHITECN.commands.Danmuji.dmj;
 import org.WHITECN.commands.SizeCalculator.sizecalc;
 import org.WHITECN.commands.fakeop.fakeop;
 import org.WHITECN.utils.DamageMeter.damageListener;
+import org.WHITECN.utils.Danmuji.DanmuHandler;
 import org.WHITECN.utils.tagUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
 public final class lxutils extends JavaPlugin {
     private static Logger logger;
+    private DanmuHandler dh = new DanmuHandler(0);
 
     @Override
     public void onEnable() {
@@ -26,13 +33,75 @@ public final class lxutils extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("sizecalc")).setExecutor(new sizecalc());
         Objects.requireNonNull(this.getCommand("sizecalculator")).setExecutor(new sizecalc());
         Objects.requireNonNull(this.getCommand("fakeop")).setExecutor(new fakeop());
+        Objects.requireNonNull(this.getCommand("dmj")).setExecutor(new dmj(dh));
         //此处注册Tab补全
         Objects.requireNonNull(this.getCommand("dmgmeter")).setTabCompleter(new dmgmeter());
         Objects.requireNonNull(this.getCommand("sizecalc")).setTabCompleter(new sizecalc());
+        Objects.requireNonNull(this.getCommand("dmj")).setTabCompleter(new dmj(dh));
         //此处注册其他主类方法
         tagUtils.init(this);
         logger = getLogger();
         this.getLogger().info("插件已启用");
+
+        //以下是弹幕姬循环任务 - 修改为异步执行 + 随机间隔
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                int playerIndex = 0;
+
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    if (Objects.equals(tagUtils.getTag(p, "dmjStatus"), "on")) {
+                        // 为每个玩家生成随机延迟 (20-60 tick，即1-3秒)，并错开执行
+                        long randomDelay = 20 + (long) (Math.random() * 40) + (playerIndex * 5L);
+                        playerIndex++;
+
+                        // 使用延迟任务分散执行
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                processPlayerDanmu(p);
+                            }
+                        }.runTaskLater(lxutils.this, randomDelay);
+                    }
+                }
+            }
+        }.runTaskTimer(this, 0L, 100L); // 主循环保持100tick(5秒)间隔
+    }
+
+    /**
+     * 异步处理单个玩家的弹幕获取
+     * @param p 玩家对象
+     */
+    private void processPlayerDanmu(Player p) {
+        // 异步执行弹幕抓取
+        CompletableFuture.supplyAsync(() -> {
+            try {
+                String roomID = tagUtils.getTag(p, "roomID");
+                if (roomID != null && !roomID.isEmpty() && tagUtils.getTag(p,"dmjStatus").equals("on")) {
+                    dh.setRoomId(Integer.parseInt(roomID));
+                    return dh.fetchDanmuForPlayer(p.getName());
+                }
+                return "未发现新弹幕";
+            } catch (Exception e) {
+                getLogger().warning("处理玩家 " + p.getName() + " 的弹幕时发生错误: " + e.getMessage());
+                return "未发现新弹幕";
+            }
+        }).thenAccept(result -> {
+            // 回到主线程发送消息
+            if (result != null && !result.equals("未发现新弹幕") && p.isOnline()) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        if (p.isOnline()) {
+                            p.sendMessage(result);
+                        }
+                    }
+                }.runTask(this);
+            }
+        }).exceptionally(throwable -> {
+            getLogger().warning("异步处理弹幕时发生异常: " + throwable.getMessage());
+            return null;
+        });
     }
 
     @Override
