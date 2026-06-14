@@ -1,3 +1,9 @@
+/*
+* TODO:
+* */
+
+
+
 package org.WHITECN;
 
 import org.WHITECN.commands.CBtoFunction.tofunction;
@@ -6,9 +12,9 @@ import org.WHITECN.commands.DamageMeter.dmgmeter;
 import org.WHITECN.commands.Danmuji.dmj;
 import org.WHITECN.commands.SizeCalculator.sizecalc;
 import org.WHITECN.commands.fakeop.fakeop;
-import org.WHITECN.utils.DamageMeter.damageListener;
+import org.WHITECN.utils.DamageMeter.DamageListener;
 import org.WHITECN.utils.Danmuji.DanmuHandler;
-import org.WHITECN.utils.tagUtils;
+import org.WHITECN.utils.TagUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,7 +31,7 @@ public final class lxutils extends JavaPlugin {
     @Override
     public void onEnable() {
         //此处注册事件
-        getServer().getPluginManager().registerEvents(new damageListener(),this);
+        getServer().getPluginManager().registerEvents(new DamageListener(),this);
         //此处注册命令
         Objects.requireNonNull(this.getCommand("dmgmeter")).setExecutor(new dmgmeter());
         Objects.requireNonNull(this.getCommand("tofunction")).setExecutor(new tofunction());
@@ -39,7 +45,7 @@ public final class lxutils extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("sizecalc")).setTabCompleter(new sizecalc());
         Objects.requireNonNull(this.getCommand("dmj")).setTabCompleter(new dmj(dh));
         //此处注册其他主类方法
-        tagUtils.init(this);
+        TagUtils.init(this);
         logger = getLogger();
         this.getLogger().info("插件已启用");
 
@@ -50,7 +56,7 @@ public final class lxutils extends JavaPlugin {
                 int playerIndex = 0;
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (Objects.equals(tagUtils.getTag(p, "dmjStatus"), "on")) {
+                    if (Objects.equals(TagUtils.getTag(p, "dmjStatus"), "on")) {
                         // 为每个玩家生成随机延迟 (20-60 tick，即1-3秒)，并错开执行
                         long randomDelay = 20 + (long) (Math.random() * 40) + (playerIndex * 5L);
                         playerIndex++;
@@ -76,8 +82,8 @@ public final class lxutils extends JavaPlugin {
         // 异步执行弹幕抓取
         CompletableFuture.supplyAsync(() -> {
             try {
-                String roomID = tagUtils.getTag(p, "roomID");
-                if (roomID != null && !roomID.isEmpty() && tagUtils.getTag(p,"dmjStatus").equals("on")) {
+                String roomID = TagUtils.getTag(p, "roomID");
+                if (roomID != null && !roomID.isEmpty() && TagUtils.getTag(p,"dmjStatus").equals("on")) {
                     dh.setRoomId(Integer.parseInt(roomID));
                     return dh.fetchDanmuForPlayer(p.getName());
                 }

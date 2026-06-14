@@ -26,6 +26,10 @@ public class tofunction implements CommandExecutor {
         }
         Player player = (Player) sender;
 
+        if (!(player.isOp())){
+            player.sendMessage(prefix + "§c§l该命令仅能被OP执行");
+        }
+
         if (args.length != 7) {
             sender.sendMessage(prefix + "§c§l命令参数错误 用法：/tofunction x1 y1 z1 x2 y2 z2 文件名(不带后缀)");
             return true;

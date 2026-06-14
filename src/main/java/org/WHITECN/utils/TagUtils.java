@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class tagUtils {
+public class TagUtils {
 
     private static JavaPlugin plugin;
 

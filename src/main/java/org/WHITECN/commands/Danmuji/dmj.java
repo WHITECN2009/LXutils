@@ -4,7 +4,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.WHITECN.utils.Danmuji.DanmuHandler;
-import org.WHITECN.utils.tagUtils;
+import org.WHITECN.utils.TagUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -33,8 +33,8 @@ public class dmj implements CommandExecutor, TabCompleter {
         }
 
         Player player = (Player) sender;
-        tagUtils.ensureTag(player,"roomID","0");
-        tagUtils.ensureTag(player,"dmjStatus","off");
+        TagUtils.ensureTag(player,"roomID","0");
+        TagUtils.ensureTag(player,"dmjStatus","off");
 
         if (args.length == 0 || args.length > 2) {
             sender.sendMessage(prefix + "§c§l用法: /dmj setroomid <房间号> 或 /dmj switch");
@@ -44,7 +44,7 @@ public class dmj implements CommandExecutor, TabCompleter {
                 int RID = Integer.parseInt(args[1]);
                 String roomTitle = DanmuHandler.getLiveTitle(RID);
                 dh.setRoomId(RID);
-                tagUtils.setTag(player,"roomID",String.valueOf(RID));
+                TagUtils.setTag(player,"roomID",String.valueOf(RID));
                 TextComponent msg = new TextComponent(prefix+"§a已连接到房间：" + RID);
                 msg.setHoverEvent(new HoverEvent(
                         HoverEvent.Action.SHOW_TEXT,
@@ -57,11 +57,11 @@ public class dmj implements CommandExecutor, TabCompleter {
             return true;
         }
         if (Objects.equals(args[0], "switch")) {
-            if (tagUtils.getTag(player,"dmjStatus").equals("on")) {
-                tagUtils.setTag(player,"dmjStatus","off");
+            if (TagUtils.getTag(player,"dmjStatus").equals("on")) {
+                TagUtils.setTag(player,"dmjStatus","off");
                 sender.sendMessage(prefix+"§a弹幕监听已关闭");
-            }else if (tagUtils.getTag(player,"dmjStatus").equals("off")) {
-                tagUtils.setTag(player,"dmjStatus","on");
+            }else if (TagUtils.getTag(player,"dmjStatus").equals("off")) {
+                TagUtils.setTag(player,"dmjStatus","on");
                 sender.sendMessage(prefix+"§a弹幕监听已开启");
             }
         }

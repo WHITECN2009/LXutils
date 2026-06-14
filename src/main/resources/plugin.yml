@@ -1,5 +1,5 @@
 name: LXutils
-version: '1.4'
+version: '1.5.0'
 main: org.WHITECN.lxutils
 api-version: '1.20'
 prefix: LXutils

@@ -1,11 +1,11 @@
 package org.WHITECN.commands.DamageMeter;
 
-import org.WHITECN.utils.tagUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.WHITECN.utils.TagUtils;
 
 import java.util.*;
 
@@ -28,24 +28,24 @@ public class dmgmeter implements CommandExecutor, TabCompleter {
         }
 
         // 初始化默认标签
-        tagUtils.ensureTag(player, "DamageMeterDigits", "2");
-        tagUtils.ensureTag(player, "DamageMeterTextColor", "white");
-        tagUtils.ensureTag(player, "DamageMeterTextBold", "false");
+        TagUtils.ensureTag(player, "DamageMeterDigits", "2");
+        TagUtils.ensureTag(player, "DamageMeterTextColor", "white");
+        TagUtils.ensureTag(player, "DamageMeterTextBold", "false");
 
         String option = args[0].toLowerCase();
 
         switch (option) {
             case "switch":
-                String currentSwitch = tagUtils.getTag(player, "DamageMeterStatus");
+                String currentSwitch = TagUtils.getTag(player, "DamageMeterStatus");
                 boolean newSwitchState = currentSwitch == null || currentSwitch.equalsIgnoreCase("false");
-                tagUtils.setTag(player, "DamageMeterStatus", newSwitchState ? "true" : "false");
+                TagUtils.setTag(player, "DamageMeterStatus", newSwitchState ? "true" : "false");
                 player.sendMessage(prefix + "§b§l切换成功 当前状态：" + (newSwitchState ? "开" : "关"));
                 break;
 
             case "bold":
-                String currentBold = tagUtils.getTag(player, "DamageMeterTextBold");
+                String currentBold = TagUtils.getTag(player, "DamageMeterTextBold");
                 boolean newBoldState = currentBold == null || currentBold.equalsIgnoreCase("false");
-                tagUtils.setTag(player, "DamageMeterTextBold", newBoldState ? "true" : "false");
+                TagUtils.setTag(player, "DamageMeterTextBold", newBoldState ? "true" : "false");
                 player.sendMessage(prefix + "§b§l切换成功 当前状态：" + (newBoldState ? "粗体" : "正常"));
                 break;
 
@@ -59,7 +59,7 @@ public class dmgmeter implements CommandExecutor, TabCompleter {
                     player.sendMessage(prefix + "§c§l无效颜色，可选: " + String.join(", ", colors));
                     return true;
                 }
-                tagUtils.setTag(player, "DamageMeterTextColor", color);
+                TagUtils.setTag(player, "DamageMeterTextColor", color);
                 player.sendMessage(prefix + "§a已设置颜色为: " + color);
                 break;
 
@@ -73,7 +73,7 @@ public class dmgmeter implements CommandExecutor, TabCompleter {
                     if (digits < 1 || digits > 5) {
                         throw new NumberFormatException();
                     }
-                    tagUtils.setTag(player, "DamageMeterDigits", String.valueOf(digits));
+                    TagUtils.setTag(player, "DamageMeterDigits", String.valueOf(digits));
                     player.sendMessage(prefix + "§a小数保留位已设置为: " + digits);
                 } catch (NumberFormatException e) {
                     player.sendMessage(prefix + "§c请输入 1~5 之间的数字");

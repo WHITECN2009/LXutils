@@ -4,8 +4,14 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
 group = 'org.WHITECN'
-version = '1.4'
+version = '1.5.0'
 
 repositories {
     mavenCentral()
@@ -21,7 +27,7 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT")
-    implementation 'org.json:json:20210307'
+    implementation 'org.json:json:20240303'
 }
 
 tasks {
@@ -29,32 +35,18 @@ tasks {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("1.20")
+        minecraftVersion("1.20.1")
     }
+}
+
+compileJava {
+    options.release = 21
 }
 
 shadowJar {
     archiveFileName = "LXutils-${project.version}.jar"
     from('src/main/resources') {
         include 'plugin.yml'
-    }
-}
-
-def targetJavaVersion = 17
-java {
-    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        options.release.set(targetJavaVersion)
     }
 }
 
