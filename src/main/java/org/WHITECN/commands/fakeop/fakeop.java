@@ -15,6 +15,7 @@ public class fakeop implements CommandExecutor {
         }
         if (sender instanceof Player && !(sender.isOp())) {
             sender.sendMessage("§c未知命令。键入 \"/help\" 来获取帮助。");
+            return true;
         }
         String name = args[0];
         Bukkit.getOnlinePlayers().forEach(player -> {player.sendMessage("§7[" + sender.getName() + ": 已将" + name + "设为管理员]");});
