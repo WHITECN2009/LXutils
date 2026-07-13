@@ -1,4 +1,4 @@
-package org.WHITECN.utils;
+package org.whitecn.utils;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;

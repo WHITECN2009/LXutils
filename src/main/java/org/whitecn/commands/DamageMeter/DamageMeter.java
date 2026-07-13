@@ -1,21 +1,24 @@
-package org.WHITECN.commands.DamageMeter;
+package org.whitecn.commands.DamageMeter;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.WHITECN.utils.TagUtils;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.whitecn.utils.TagUtils;
 
 import java.util.*;
 
-public class dmgmeter implements CommandExecutor, TabCompleter {
-    String prefix = "§b§l[DamageMeter_LX]§r ";
+import static org.whitecn.Vars.DAMAGEMETER_PREFIX;
+
+public class DamageMeter implements CommandExecutor, TabCompleter {
+    String prefix = DAMAGEMETER_PREFIX;
 
     List<String> colors = Arrays.asList("white", "red", "blue", "green", "yellow", "aqua", "gold", "gray", "dark_red", "dark_green", "dark_blue");
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NonNull CommandSender sender, @NonNull Command cmd, @NonNull String label, String @NonNull [] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage(prefix + "§c§l该命令仅能被玩家执行");
             return true;
@@ -90,7 +93,7 @@ public class dmgmeter implements CommandExecutor, TabCompleter {
 
     // Tab 补全
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List<String> onTabComplete(@NonNull CommandSender sender, @NonNull Command command, @NonNull String alias, String[] args) {
         if (args.length == 1) {
             return Arrays.asList("switch", "color", "digits");
         }

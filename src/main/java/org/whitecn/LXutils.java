@@ -1,20 +1,14 @@
-/*
-* TODO:
-* */
+package org.whitecn;
 
-
-
-package org.WHITECN;
-
-import org.WHITECN.commands.CBtoFunction.tofunction;
-import org.WHITECN.commands.CBtoFunction.tofunctionconfirm;
-import org.WHITECN.commands.DamageMeter.dmgmeter;
-import org.WHITECN.commands.Danmuji.dmj;
-import org.WHITECN.commands.SizeCalculator.sizecalc;
-import org.WHITECN.commands.fakeop.fakeop;
-import org.WHITECN.utils.DamageMeter.DamageListener;
-import org.WHITECN.utils.Danmuji.DanmuHandler;
-import org.WHITECN.utils.TagUtils;
+import org.whitecn.commands.CBtoFunction.ToFunction;
+import org.whitecn.commands.CBtoFunction.ToFunctionConfirm;
+import org.whitecn.commands.DamageMeter.DamageMeter;
+import org.whitecn.commands.Danmuji.Danmuji;
+import org.whitecn.commands.SizeCalculator.SizeCalculator;
+import org.whitecn.commands.FakeOP.FakeOP;
+import org.whitecn.utils.DamageMeter.DamageListener;
+import org.whitecn.utils.Danmuji.DanmuHandler;
+import org.whitecn.utils.TagUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,26 +18,26 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
-public final class lxutils extends JavaPlugin {
+public final class LXutils extends JavaPlugin {
     private static Logger logger;
-    private DanmuHandler dh = new DanmuHandler(0);
+    private final DanmuHandler dh = new DanmuHandler(0);
 
     @Override
     public void onEnable() {
         //此处注册事件
         getServer().getPluginManager().registerEvents(new DamageListener(),this);
         //此处注册命令
-        Objects.requireNonNull(this.getCommand("dmgmeter")).setExecutor(new dmgmeter());
-        Objects.requireNonNull(this.getCommand("tofunction")).setExecutor(new tofunction());
-        Objects.requireNonNull(this.getCommand("tofunctionconfirm")).setExecutor(new tofunctionconfirm());
-        Objects.requireNonNull(this.getCommand("sizecalc")).setExecutor(new sizecalc());
-        Objects.requireNonNull(this.getCommand("sizecalculator")).setExecutor(new sizecalc());
-        Objects.requireNonNull(this.getCommand("fakeop")).setExecutor(new fakeop());
-        Objects.requireNonNull(this.getCommand("dmj")).setExecutor(new dmj(dh));
+        Objects.requireNonNull(this.getCommand("dmgmeter")).setExecutor(new DamageMeter());
+        Objects.requireNonNull(this.getCommand("tofunction")).setExecutor(new ToFunction());
+        Objects.requireNonNull(this.getCommand("tofunctionconfirm")).setExecutor(new ToFunctionConfirm());
+        Objects.requireNonNull(this.getCommand("sizecalc")).setExecutor(new SizeCalculator());
+        Objects.requireNonNull(this.getCommand("sizecalculator")).setExecutor(new SizeCalculator());
+        Objects.requireNonNull(this.getCommand("fakeop")).setExecutor(new FakeOP());
+        Objects.requireNonNull(this.getCommand("dmj")).setExecutor(new Danmuji(dh));
         //此处注册Tab补全
-        Objects.requireNonNull(this.getCommand("dmgmeter")).setTabCompleter(new dmgmeter());
-        Objects.requireNonNull(this.getCommand("sizecalc")).setTabCompleter(new sizecalc());
-        Objects.requireNonNull(this.getCommand("dmj")).setTabCompleter(new dmj(dh));
+        Objects.requireNonNull(this.getCommand("dmgmeter")).setTabCompleter(new DamageMeter());
+        Objects.requireNonNull(this.getCommand("sizecalc")).setTabCompleter(new SizeCalculator());
+        Objects.requireNonNull(this.getCommand("dmj")).setTabCompleter(new Danmuji(dh));
         //此处注册其他主类方法
         TagUtils.init(this);
         logger = getLogger();
@@ -67,7 +61,7 @@ public final class lxutils extends JavaPlugin {
                             public void run() {
                                 processPlayerDanmu(p);
                             }
-                        }.runTaskLater(lxutils.this, randomDelay);
+                        }.runTaskLater(LXutils.this, randomDelay);
                     }
                 }
             }

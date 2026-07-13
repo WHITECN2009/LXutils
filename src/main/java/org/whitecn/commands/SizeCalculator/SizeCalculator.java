@@ -1,9 +1,10 @@
-package org.WHITECN.commands.SizeCalculator;
+package org.whitecn.commands.SizeCalculator;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -11,14 +12,16 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class sizecalc implements CommandExecutor, TabCompleter {
-    String prefix = "§b§l[SizeCalculator_LX] §r";
+import static org.whitecn.Vars.SIZECALCULATOR_PREFIX;
+
+public class SizeCalculator implements CommandExecutor, TabCompleter {
+    String prefix = SIZECALCULATOR_PREFIX;
     int totalBlocks;
     double bigChest,chest;
     DecimalFormat decimalFormat = new DecimalFormat("#0.00");
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NonNull CommandSender sender, @NonNull Command cmd, @NonNull String label, String[] args) {
         if (!(args.length == 1) && !(args.length == 6)) {
             sender.sendMessage(prefix+"§c§l用法: /sizecalc <x1> <y1> <z1> <x2> <y2> <z2> 或 /sizecalc <方块总数>");
             return true;
@@ -63,15 +66,15 @@ public class sizecalc implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List<String> onTabComplete(@NonNull CommandSender sender, @NonNull Command command, @NonNull String alias, String[] args) {
         List<String> list = new ArrayList<>();
         return switch (args.length) {
             case 1 -> Arrays.asList("请输入方块总量", "x1", "y1", "z1");
             case 2 -> Arrays.asList("y1", "z1");
-            case 3 -> Arrays.asList("z1");
+            case 3 -> List.of("z1");
             case 4 -> Arrays.asList("x2", "y2", "z2");
             case 5 -> Arrays.asList("y2", "z2");
-            case 6 -> Arrays.asList("z2");
+            case 6 -> List.of("z2");
             default -> Collections.emptyList();
         };
     }

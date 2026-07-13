@@ -1,7 +1,8 @@
-package org.WHITECN.commands.CBtoFunction;
+package org.whitecn.commands.CBtoFunction;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -10,16 +11,20 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.UUID;
 
-public class tofunction implements CommandExecutor {
-    String prefix = "§b§l[CBtoFunction_LX] §r";
+import static org.whitecn.Vars.CBTOFUNCTION_PREFIX;
+
+public class ToFunction implements CommandExecutor {
+    static String prefix = CBTOFUNCTION_PREFIX;
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NonNull CommandSender sender, @NonNull Command cmd, @NonNull String label, String @NonNull [] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage(prefix + "§c§l该命令仅能被玩家执行");
             return true;
@@ -28,6 +33,16 @@ public class tofunction implements CommandExecutor {
 
         if (!(player.isOp())){
             player.sendMessage(prefix + "§c§l该命令仅能被OP执行");
+            return true;
+        }
+
+        if (PendingOperations.pendingMap.containsKey(player.getUniqueId())) {
+            TextComponent msg = new TextComponent("§c您还有未确认的操作 如果想要取消 请点击此处 ");
+            TextComponent cancel = new TextComponent("§c[取消]");
+            cancel.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tofunctionconfirm cancel"));
+            msg.addExtra(cancel);
+            player.spigot().sendMessage(msg);
+            return true;
         }
 
         if (args.length != 7) {
@@ -46,12 +61,14 @@ public class tofunction implements CommandExecutor {
             boolean inLine = isAxisAlignedLine(x1, y1, z1, x2, y2, z2);
 
             File file = new File("plugins/LXutils/CBtoFunction/outputFunctions", fileName + ".mcfunction");
-            file.getParentFile().mkdirs();  // 自动创建目录
+            if (!(file.getParentFile().mkdirs())){
+                player.sendMessage(prefix + "§c文件创建失败");
+            }
 
             if (file.exists()) {
                 // 如果文件已存在，则先缓存操作，然后发出确认消息
-                PendingOperation op = new PendingOperation(player, x1, y1, z1, x2, y2, z2, fileName);
-                PendingOperations.pendingMap.put(player.getUniqueId(), op);
+                PendingOperation operation = new PendingOperation(player, x1, y1, z1, x2, y2, z2, fileName);
+                PendingOperations.pendingMap.put(player.getUniqueId(), operation);
 
                 // 创建可点击的提示信息
                 TextComponent msg = new TextComponent(prefix + "§e文件已存在，选择覆盖或追加： ");
@@ -91,12 +108,12 @@ public class tofunction implements CommandExecutor {
      * 执行命令块区域的扫描写入操作
      *
      * @param player 玩家
-     * @param x1 起点坐标
-     * @param y1
-     * @param z1
-     * @param x2 终点坐标
-     * @param y2
-     * @param z2
+     * @param x1 起点x坐标
+     * @param y1 起点y坐标
+     * @param z1 起点z坐标
+     * @param x2 终点x坐标
+     * @param y2 终点y坐标
+     * @param z2 终点z坐标
      * @param file 目标文件
      * @param mode "overwrite" 或 "append"
      * @throws IOException 文件写入异常
@@ -106,7 +123,9 @@ public class tofunction implements CommandExecutor {
         // mode 为 overwrite 时，先删除旧文件以便重写
         boolean appendFlag = mode.equalsIgnoreCase("append");
         if (mode.equalsIgnoreCase("overwrite") && file.exists()) {
-            file.delete();
+            if (!(file.delete())){
+                player.sendMessage(prefix + "§c文件创建失败");
+            }
         }
         FileWriter fw = new FileWriter(file, appendFlag);
 

@@ -1,12 +1,15 @@
-package org.WHITECN.utils.DamageMeter;
+package org.whitecn.utils.DamageMeter;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.WHITECN.utils.TagUtils;
+import org.whitecn.utils.TagUtils;
 
 import java.text.DecimalFormat;
 import java.util.Objects;
@@ -14,14 +17,18 @@ import java.util.Objects;
 public class DamageListener implements Listener {
 
     @EventHandler
-    public void onDamage(EntityDamageByEntityEvent e) {
+    public void onDamage(EntityDamageByEntityEvent event) {
         try{
-            if (e.getDamager() instanceof Player) {
-                Player player = (Player) e.getDamager();
-                double dealtDamage = e.getDamage();
-                double actualDamage = e.getFinalDamage();
+            if (event.getDamager() instanceof Player) {
+                Player player = (Player) event.getDamager();
+                LivingEntity victim = (LivingEntity) event.getEntity();
+                double actualDamage = 0;
                 if (!TagUtils.hasTag(player, "DamageMeterStatus") || Objects.equals(TagUtils.getTag(player, "DamageMeterStatus"), "false")){
                     return;
+                }
+                double dealtDamage = event.getDamage();
+                if (victim.isDead()){
+                    actualDamage = Objects.requireNonNull(victim.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getBaseValue();
                 }
                 TagUtils.ensureTag(player, "DamageMeterDigits", "2");
                 TagUtils.ensureTag(player, "DamageMeterTextColor", "white");
@@ -31,7 +38,7 @@ public class DamageListener implements Listener {
                 String Bold = getBoldStatus(TagUtils.getTag(player, "DamageMeterTextBold"));
                 sendActionBar(player, colorCode + Bold + "理论伤害: " + df.format(dealtDamage) + "§7|§r" + colorCode + Bold + "实际伤害: " + df.format(actualDamage));
             }
-        }catch (NumberFormatException ignored){}
+        }catch (Exception ignored){}
     }
 
     public void sendActionBar(Player player, String message) {
@@ -61,9 +68,10 @@ public class DamageListener implements Listener {
     }
 
     public String getBoldStatus(String Bold) {
-        return switch (Bold.toLowerCase()) {
-            case "true" -> "§l";
-            default -> "";
-        };
+        if (Bold.equalsIgnoreCase("true")) {
+            return "§l";
+        }else {
+            return "";
+        }
     }
 }

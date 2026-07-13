@@ -1,15 +1,16 @@
-package org.WHITECN.commands.fakeop;
+package org.whitecn.commands.FakeOP;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class fakeop implements CommandExecutor {
+public class FakeOP implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NonNull CommandSender sender, @NonNull Command cmd, @NonNull String label, String[] args) {
         if (args.length != 1) {
             return false;
         }

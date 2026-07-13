@@ -1,4 +1,4 @@
-package org.WHITECN.utils.Danmuji;
+package org.whitecn.utils.Danmuji;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

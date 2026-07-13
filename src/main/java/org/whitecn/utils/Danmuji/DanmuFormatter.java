@@ -1,4 +1,4 @@
-package org.WHITECN.utils.Danmuji;
+package org.whitecn.utils.Danmuji;
 
 import com.google.gson.JsonObject;
 import net.md_5.bungee.api.ChatColor;
