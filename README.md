@@ -18,6 +18,7 @@
  - **SizeCalculator : 从输入的数据中计算方块量并以用户友好形式展示**
  - **FakeOP : 整蛊用 你知道什么意思**
  - **Danmuji : 顾名思义 我们插件区也有自己的弹幕姬了!**
+ - **MiracleFinder : 查找玩家周围一定半径内的自然结构**
 
 ### 指令及用法
 
@@ -47,3 +48,9 @@
    - /dmj switch
    
    - /dmj setroomid <房间号>
+   
+ - **MiracleFinder**
+
+   - /mfinder 或 /miraclefinder 来启动搜索
+   - /miraclefinder [option]
+   - /mfinder [option]

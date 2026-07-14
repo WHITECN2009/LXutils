@@ -1,9 +1,12 @@
 package org.whitecn;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.whitecn.commands.CBtoFunction.ToFunction;
 import org.whitecn.commands.CBtoFunction.ToFunctionConfirm;
 import org.whitecn.commands.DamageMeter.DamageMeter;
 import org.whitecn.commands.Danmuji.Danmuji;
+import org.whitecn.commands.MiracleFinder.MiracleFinder;
 import org.whitecn.commands.SizeCalculator.SizeCalculator;
 import org.whitecn.commands.FakeOP.FakeOP;
 import org.whitecn.utils.DamageMeter.DamageListener;
@@ -26,6 +29,7 @@ public final class LXutils extends JavaPlugin {
     public void onEnable() {
         //此处注册事件
         getServer().getPluginManager().registerEvents(new DamageListener(),this);
+        getServer().getPluginManager().registerEvents(new MiracleFinder(this), this);
         //此处注册命令
         Objects.requireNonNull(this.getCommand("dmgmeter")).setExecutor(new DamageMeter());
         Objects.requireNonNull(this.getCommand("tofunction")).setExecutor(new ToFunction());
@@ -34,10 +38,12 @@ public final class LXutils extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("sizecalculator")).setExecutor(new SizeCalculator());
         Objects.requireNonNull(this.getCommand("fakeop")).setExecutor(new FakeOP());
         Objects.requireNonNull(this.getCommand("dmj")).setExecutor(new Danmuji(dh));
+        Objects.requireNonNull(getCommand("miraclefinder")).setExecutor(new MiracleFinder(this));
         //此处注册Tab补全
         Objects.requireNonNull(this.getCommand("dmgmeter")).setTabCompleter(new DamageMeter());
         Objects.requireNonNull(this.getCommand("sizecalc")).setTabCompleter(new SizeCalculator());
         Objects.requireNonNull(this.getCommand("dmj")).setTabCompleter(new Danmuji(dh));
+        Objects.requireNonNull(getCommand("miraclefinder")).setTabCompleter(new MiracleFinder(this));
         //此处注册其他主类方法
         TagUtils.init(this);
         logger = getLogger();
@@ -107,5 +113,11 @@ public final class LXutils extends JavaPlugin {
     @Override
     public void onDisable() {
         this.getLogger().info("插件已禁用");
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        // 清理冷却数据，防止内存泄漏
+        MiracleFinder.cleanupCooldown(event.getPlayer());
     }
 }

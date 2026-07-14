@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static org.whitecn.Vars.CBTOFUNCTION_PREFIX;
+import static org.whitecn.Vars.getNonPlayerWarning;
 
 public class ToFunctionConfirm implements CommandExecutor {
     String prefix = CBTOFUNCTION_PREFIX;
@@ -16,7 +17,7 @@ public class ToFunctionConfirm implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(prefix + "§c§l该命令仅能由玩家执行");
+            sender.sendMessage(getNonPlayerWarning(prefix));
             return true;
         }
         Player player = (Player) sender;

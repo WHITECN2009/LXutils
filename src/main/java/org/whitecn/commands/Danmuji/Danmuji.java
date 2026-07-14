@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.whitecn.Vars.DANMUJI_PREFIX;
+import static org.whitecn.Vars.getNonPlayerWarning;
 
 public class Danmuji implements CommandExecutor, TabCompleter {
 
@@ -31,11 +32,11 @@ public class Danmuji implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NonNull CommandSender sender, @NonNull Command cmd, @NonNull String label, String @NonNull [] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(prefix+"§c§l该命令仅能被玩家执行");
+            sender.sendMessage(getNonPlayerWarning(prefix));
             return true;
         }
-
         Player player = (Player) sender;
+
         TagUtils.ensureTag(player,"roomID","0");
         TagUtils.ensureTag(player,"dmjStatus","off");
 

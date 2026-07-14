@@ -11,6 +11,7 @@ import org.whitecn.utils.TagUtils;
 import java.util.*;
 
 import static org.whitecn.Vars.DAMAGEMETER_PREFIX;
+import static org.whitecn.Vars.getNonPlayerWarning;
 
 public class DamageMeter implements CommandExecutor, TabCompleter {
     String prefix = DAMAGEMETER_PREFIX;
@@ -20,7 +21,7 @@ public class DamageMeter implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NonNull CommandSender sender, @NonNull Command cmd, @NonNull String label, String @NonNull [] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(prefix + "§c§l该命令仅能被玩家执行");
+            sender.sendMessage(getNonPlayerWarning(prefix));
             return true;
         }
         Player player = (Player) sender;
