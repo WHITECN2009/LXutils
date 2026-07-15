@@ -19,6 +19,7 @@
  - **FakeOP : 整蛊用 你知道什么意思**
  - **Danmuji : 顾名思义 我们插件区也有自己的弹幕姬了!**
  - **MiracleFinder : 查找玩家周围一定半径内的自然结构**
+ - **TrashCan : 垃圾桶而已**
 
 ### 指令及用法
 
@@ -54,3 +55,7 @@
    - /mfinder 或 /miraclefinder 来启动搜索
    - /miraclefinder [option]
    - /mfinder [option]
+ 
+ - **TrashCan**
+
+   - /trash 或 /trashcan 或 /trashoflxutils
