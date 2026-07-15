@@ -1,5 +1,5 @@
 name: LXutils
-version: '1.6.0'
+version: '1.6.1'
 main: org.whitecn.LXutils
 api-version: '1.20'
 prefix: LXutils
@@ -41,9 +41,13 @@ commands:
     usage: /<command> [option]
     aliases: [ mfinder, findstructure ]
     permission: lxutils.miraclefinder
+  trashcan:
+    description: 就是一个垃圾桶而已
+    usage: /<command>
+    aliases: [ trash, trashoflxutils ]
+    permission: lxutils.trashcan
 
 permissions:
-  # ========== 基础权限 ==========
   lxutils.use:
     description: "允许使用所有 LXutils 命令"
     default: op
@@ -56,32 +60,30 @@ permissions:
       lxutils.dmj: true
       lxutils.miraclefinder: true
 
-  # ========== tofunction ==========
   lxutils.tofunction:
     description: "允许使用 /tofunction 命令"
     default: op
 
-  # ========== dmgmeter ==========
   lxutils.dmgmeter:
     description: "允许使用 /dmgmeter 命令"
     default: true
 
-  # ========== sizecalc 系列 ==========
   lxutils.sizecalc:
     description: "允许使用 /sizecalc 和 /sizecalculator 命令"
     default: true
 
-  # ========== fakeop ==========
   lxutils.fakeop:
-    description: "允许使用 /fakeop 命令（整蛊用，建议仅 OP 使用）"
+    description: "允许使用 /fakeop 命令"
     default: op
 
-  # ========== dmj ==========
   lxutils.dmj:
     description: "允许使用 /dmj 命令"
     default: true
 
-  # ========== miraclefinder ==========
   lxutils.miraclefinder:
-    description: "允许使用 /miraclefinder 命令（别名: /mfinder, /findstructure）"
+    description: "允许使用 /miraclefinder 命令及其所有别名命令"
+    default: true
+
+  lxutils.trashcan:
+    description: "允许使用 /trashcan 命令及其所有别名命令"
     default: true

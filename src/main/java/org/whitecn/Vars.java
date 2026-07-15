@@ -6,6 +6,7 @@ public class Vars {
     public final static String DANMUJI_PREFIX = "§b§l[Danmuji_LX]§r ";
     public final static String SIZECALCULATOR_PREFIX = "§b§l[SizeCalculator_LX]§r ";
     public final static String MIRACLEFINDER_PREFIX = "§b§l[MiracleFinder_LX]§r ";
+    public final static String TRASHCAN_PREFIX = "§b§l[TrashCan_LX]§r "; //说实话 这玩意需要前缀吗...
 
     public final static Integer MIRACLEFINDER_RADIUS = 5000;
 

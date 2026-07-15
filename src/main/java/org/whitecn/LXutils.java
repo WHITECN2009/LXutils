@@ -9,6 +9,7 @@ import org.whitecn.commands.Danmuji.Danmuji;
 import org.whitecn.commands.MiracleFinder.MiracleFinder;
 import org.whitecn.commands.SizeCalculator.SizeCalculator;
 import org.whitecn.commands.FakeOP.FakeOP;
+import org.whitecn.commands.TrashCan.TrashCan;
 import org.whitecn.utils.DamageMeter.DamageListener;
 import org.whitecn.utils.Danmuji.DanmuHandler;
 import org.whitecn.utils.TagUtils;
@@ -38,7 +39,8 @@ public final class LXutils extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("sizecalculator")).setExecutor(new SizeCalculator());
         Objects.requireNonNull(this.getCommand("fakeop")).setExecutor(new FakeOP());
         Objects.requireNonNull(this.getCommand("dmj")).setExecutor(new Danmuji(dh));
-        Objects.requireNonNull(getCommand("miraclefinder")).setExecutor(new MiracleFinder(this));
+        Objects.requireNonNull(this.getCommand("miraclefinder")).setExecutor(new MiracleFinder(this));
+        Objects.requireNonNull(this.getCommand("trashcan")).setExecutor(new TrashCan());
         //此处注册Tab补全
         Objects.requireNonNull(this.getCommand("dmgmeter")).setTabCompleter(new DamageMeter());
         Objects.requireNonNull(this.getCommand("sizecalc")).setTabCompleter(new SizeCalculator());
