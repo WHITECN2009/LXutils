@@ -22,7 +22,7 @@ public class DamageListener implements Listener {
             if (event.getDamager() instanceof Player) {
                 Player player = (Player) event.getDamager();
                 LivingEntity victim = (LivingEntity) event.getEntity();
-                double actualDamage = 0;
+                double actualDamage = event.getFinalDamage();
                 if (!TagUtils.hasTag(player, "DamageMeterStatus") || Objects.equals(TagUtils.getTag(player, "DamageMeterStatus"), "false")){
                     return;
                 }
@@ -33,7 +33,7 @@ public class DamageListener implements Listener {
                 TagUtils.ensureTag(player, "DamageMeterDigits", "2");
                 TagUtils.ensureTag(player, "DamageMeterTextColor", "white");
                 TagUtils.ensureTag(player, "DamageMeterTextBold", "false");
-                DecimalFormat df = new DecimalFormat("#."+"0".repeat(Integer.parseInt(TagUtils.getTag(player,"DamageMeterDigits"))));
+                DecimalFormat df = new DecimalFormat("0." + "0".repeat(Integer.parseInt(TagUtils.getTag(player,"DamageMeterDigits"))));
                 String colorCode = getColorCode(TagUtils.getTag(player, "DamageMeterTextColor"));
                 String Bold = getBoldStatus(TagUtils.getTag(player, "DamageMeterTextBold"));
                 sendActionBar(player, colorCode + Bold + "理论伤害: " + df.format(dealtDamage) + "§7|§r" + colorCode + Bold + "实际伤害: " + df.format(actualDamage));
